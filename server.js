@@ -9,6 +9,11 @@ const PORT = 3000;
 //import data
 const pokemon = require("./models/pokemon");
 
+//! 5
+//config views
+app.set("view engine", "jsx");
+app.engine("jsx", require("jsx-view-engine").createEngine());
+
 //! 3
 // default route
 app.get("/", (req, res) => {
@@ -16,9 +21,10 @@ app.get("/", (req, res) => {
 });
 
 //* Create Different Route
-//! 5
+//! 6
 app.get("/pokemon", (req, res) => {
-  res.send(pokemon);
+  //   res.send(pokemon);
+  res.render("Index");
 });
 
 //! 2
