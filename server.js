@@ -5,10 +5,20 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+//! 4
+//import data
+const pokemon = require("./models/pokemon");
+
 //! 3
 // default route
 app.get("/", (req, res) => {
-  res.send("Welcome to the Pokemon App!");
+  res.send("<h1>Welcome to the Pokemon App!</h1>");
+});
+
+//* Create Different Route
+//! 5
+app.get("/pokemon", (req, res) => {
+  res.send(pokemon);
 });
 
 //! 2
