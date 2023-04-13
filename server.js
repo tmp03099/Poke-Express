@@ -14,6 +14,15 @@ const pokemon = require("./models/pokemon");
 app.set("view engine", "jsx");
 app.engine("jsx", require("jsx-view-engine").createEngine());
 
+//? Middleware
+//setting a middleware to run in our app
+app.use((req, res, next) => {
+  console.log(req.url);
+  next();
+});
+//parses the data fromt the request
+app.use(express.urlencoded({ extended: false }));
+
 //! 3
 // default route
 app.get("/", (req, res) => {
@@ -24,7 +33,7 @@ app.get("/", (req, res) => {
 //! 6
 app.get("/pokemon", (req, res) => {
   //   res.send(pokemon);
-  res.render("/pokemon/Index", { pokemon: pokemon });
+  res.render("Index", { pokemon: pokemon });
 });
 
 app.get("/pokemon/:id", (req, res) => {
