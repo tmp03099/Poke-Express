@@ -1,14 +1,12 @@
 const React = require("react");
 
-function Show() {
+function Show({ poke }) {
   return (
-    <div style={div}>
-      <h1 style={indexStyle}>List of Pokemon!</h1>
-
-      {/* <div>
-        <h4>Pokemon Name : {.name}</h4>
-        <img src={.img} alt="pokemon.img" />
-      </div> */}
+    <div>
+      <h1>Gotta Catch 'Em All</h1>
+      <h2>{poke.name}</h2>
+      <img src={poke.img} alt="poke.img" /> <br />
+      <a href="/pokemon">Back</a>
     </div>
   );
 }
