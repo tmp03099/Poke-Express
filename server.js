@@ -1,20 +1,16 @@
 require("dotenv").config();
 
-//! 1
 const express = require("express");
-
 const mongoose = require("mongoose");
 
 //create app
 const app = express();
 const PORT = 3000;
 
-//! 4
 //import data
 const pokemon = require("./models/pokemon");
 const Pokemon = require("./models/Poke");
 
-//! 5
 //config views
 app.set("view engine", "jsx");
 app.engine("jsx", require("jsx-view-engine").createEngine());
@@ -28,16 +24,13 @@ app.use((req, res, next) => {
 //parses the data fromt the request
 app.use(express.urlencoded({ extended: false }));
 
-//! 3
 // default route
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to the Pokemon App!</h1>");
 });
 
-//* Create Different Route
-//! 6
+//* Index Route return all list of poke
 app.get("/pokemon", (req, res) => {
-  //   res.send(pokemon);
   Pokemon.find()
     .then((pokemon) => {
       console.log(pokemon);
@@ -48,11 +41,30 @@ app.get("/pokemon", (req, res) => {
     });
 });
 
-app.get("/pokemon/:id", (req, res) => {
-  res.render("Show", { poke: pokemon[req.params.id] });
+// * New route return a form
+app.get("/pokemon/new", (req, res) => {
+  res.render("pokemon/New");
 });
 
-//! 2
+// * Show Route return each POKE
+app.get("/pokemon/:id", (req, res) => {
+  Pokemon.findById(req.params.id, (error, foundPoke) => {
+    res.render("pokemon/Show", { poke: foundPoke });
+  });
+});
+
+// * Post method: create a single Poke
+app.post("/pokemon", (req, res) => {
+  Pokemon.create(req.body)
+    .then((pokemon) => {
+      console.log(pokemon);
+      res.redirect("/pokemon");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
 // set listen for port
 app.listen(PORT, function () {
   console.log(`Server runing on port ${PORT}`);
